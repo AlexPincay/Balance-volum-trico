@@ -1,0 +1,114 @@
+bfpd=int(input('Ingrese los barriles de fluido: '))
+bsw=float(input('Ingrese el BSW (%): '))
+emul=float(input('Ingrese la emulsión (%): '))
+ar=int(input('Ingrese el agua residual (ppm): '))
+efi=float(input('Ingrese la eficiencia del dispositivo (%): '))
+#Barriles de agua
+bwpd=bfpd*(bsw/100)
+#Barriles de petróleo
+bopd=bfpd-bwpd
+#Agua emulsionada
+h2oe=bopd*emul/(100-emul)
+#Agua libre
+h2ofr=bwpd-h2oe
+#Emulsión
+emuls=bopd+h2oe
+#Pérdida de agua libre
+ph2ofr=h2ofr*(100-efi)/100
+#Agua libre a la eficiencia del equipo
+h2ofr1=h2ofr-ph2ofr
+total=bopd+h2oe+h2ofr
+################## INLET ###################
+# bopd
+# Agua emulsionada
+# Emulsión 
+# Agua libre
+# Agua residual
+# bfpd
+print(f'############ INLET ###########')
+print(f'BOPD= {bopd:0.1f}')
+print(f'Agua emulsionada= {h2oe:0.4f}')
+print(f'Emulsión= {emuls:0.4f}')
+print(f'Agua libre= {h2ofr:0.4f}')
+print(f'BFPD= {total:0.1f}')
+############### Iteración 1 ###############
+#Emulsión
+emul1=bopd+h2oe+ph2ofr
+#Suma
+total1=emul1+h2ofr1
+print(f'########### Iteración 1 ###########')
+print(f'BOPD= {bopd:0.4f}')
+print(f'Agua emulsionada= {h2oe:0.4f}')
+print(f'Pérdida de agua libre= {ph2ofr:0.4f}')
+print(f'Emulsión= {emul1:0.4f}')
+print(f'Agua libre= {h2ofr1:0.4f}')
+print(f'BFPD= {total1:0.1f}')
+############### Iteración 2 ###############
+#Agua residual
+ar2=h2ofr1*ar/(1000000-ar)
+#Petróleo resultante
+bopd2=bopd-ar2
+#Emulsión
+emuls2=bopd2+h2oe+ph2ofr
+#Agua libre
+h2ofr2=h2ofr1
+#Suma
+total2=emuls2+h2ofr2+ar2
+print(f'########### Iteración 2 ###########')
+print(f'BOPD= {bopd2:0.1f}')
+print(f'Agua emulsionada= {h2oe:0.4f}')
+print(f'Pérdida de agua libre= {ph2ofr:0.4f}')
+print(f'Emulsión= {emuls2:0.4f}')
+print(f'Agua libre= {h2ofr2:0.4f}')
+print(f'Agua residual= {ar2:0.4f}')
+print(f'BFPD= {total2:0.1f}')
+############### Iteración 3 ###############
+#Agua emulsionada 
+h2oe2=bopd2*emul/(100-emul)
+#Variación de agua emulsionada
+vh2oe=h2oe-h2oe2
+#Emulsión
+emuls3=h2oe2+bopd2+ph2ofr
+#Agua libre
+h2ofr3=vh2oe+h2ofr2
+#Suma
+total3=emuls3+h2ofr3+ar2
+print(f'########### Iteración 3 ###########')
+print(f'Agua emulsionada= {h2oe2:0.4f}')
+print(f'BOPD= {bopd2:0.1f}')
+print(f'Pérdida de agua libre= {ph2ofr:0.4f}')
+print(f'Emulsión= {emuls3:0.4f}')
+print(f'Agua libre= {h2ofr3:0.4f}')
+print(f'Agua residual= {ar2:0.4f}')
+print(f'BFPD= {total3:0.1f}')
+############### Iteración 4 ###############
+#Agua residual
+ar3=h2ofr3*ar/(1000000-ar)
+#Variación de agua residual
+var=ar3-ar2
+#Petróleo resultante
+bopd3=bopd2-var
+#Emulsión
+emuls4=bopd3+h2oe2+ph2ofr
+#Agua libre
+h2ofr4=h2ofr3
+#Suma
+total4=emuls4+h2ofr4+ar3
+print(f'########### Iteración 4 ###########')
+print(f'BOPD= {bopd3:0.1f}')
+print(f'Agua emulsionada= {h2oe2:0.4f}')
+print(f'Pérdida de agua libre= {ph2ofr:0.4f}')
+print(f'Emulsión= {emuls4:0.4f}')
+print(f'Agua libre= {h2ofr4:0.4f}')
+print(f'Agua residual= {ar3:0.4f}')
+print(f'BFPD= {total4:0.1f}')
+############### Iteración 5 ###############
+#Agua emulsionada
+h2oe3=bopd3*emul/(100-emul)
+#Variación de agua emulsionada
+vh2oe2=h2oe2-h2oe3
+print(f'########### Iteración 5 ###########')
+print(f'Agua emulsionada= {h2oe3:0.4f}')
+print(f'BOPD= {bopd3:0.4f}')
+print(f'Agua libre= {h2ofr4:0.4f}')
+print(f'Variación de agua emulsionada= {vh2oe2:0.4f}')
